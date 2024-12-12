@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 import { dbConnect } from "./Connection/dbConnect.js";
 import { isAdmin } from "./Middlewares/isAdmin.js";
 import { isUser } from "./Middlewares/isUser.js";
+import { generalRouter } from "./Routes/generalRouter.js";
+import { usersRouter } from "./Routes/usersRouter.js";
+
 /* ------------  */
 
 /* Create Express App and App specific configurations and middlewares*/
@@ -25,19 +28,13 @@ dbConnect({ DB_USER, DB_PASSWORD });
 /* -------------------------------- */
 
 /* Custom middlewares application level */
-// app.use("/", isAdmin);
 /*-----------------------------------------*/
 
 /* Add http handler routes here  */
-app.get("/api/v1/user/:id", isUser, (req, res) => {
-  res.send({ status: 200, response: "OK" });
-});
-app.get("/api/v1/:id", isAdmin, (req, res) => {
-  res.send({ status: 200, response: "OK" });
-});
-app.get("api/v1/users/:id", isAdmin, (req, res) => {
-  res.send({ status: 200 });
-});
+app.use("/", isAdmin, generalRouter);
+app.use("/api/v1/", isAdmin, generalRouter);
+app.use("/api/v1/users", isAdmin, usersRouter);
+app.use("/api/v1/connections", isAdmin, usersRouter);
 
 /*-----------------------------------------*/
 
