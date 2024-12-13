@@ -8,6 +8,7 @@ import { isAdmin } from "./Middlewares/isAdmin.js";
 import { isUser } from "./Middlewares/isUser.js";
 import { generalRouter } from "./Routes/generalRouter.js";
 import { usersRouter } from "./Routes/usersRouter.js";
+import { connectionsRouter } from "./Routes/connectionsRouter.js";
 
 /* ------------  */
 
@@ -34,8 +35,7 @@ dbConnect({ DB_USER, DB_PASSWORD });
 app.use("/", isAdmin, generalRouter);
 app.use("/api/v1/", isAdmin, generalRouter);
 app.use("/api/v1/users", isAdmin, usersRouter);
-app.use("/api/v1/connections", isAdmin, usersRouter);
-
+app.use("/api/v1/connections", connectionsRouter);
 /*-----------------------------------------*/
 
 /* Listen to PORT */
